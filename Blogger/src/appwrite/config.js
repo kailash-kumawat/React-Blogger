@@ -118,7 +118,9 @@ export class Service {
 
   getFilePreview(fileId) {
     return this.bucket.getFilePreview(conf.appWriteBucketId, fileId);
-  } 
+  }
+
+  // next redux toolkit
 }
 
 const service = new Service();
