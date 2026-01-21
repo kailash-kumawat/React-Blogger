@@ -79,7 +79,7 @@ function Login() {
 export default Login;
 
 // NOTES:
-// handleSubmit is an method from react-hook-form that handles form submission and validation.
+// handleSubmit is a method from react-hook-form that handles form submission and validation.
 // It takes a callback function (login in this case) that will be called with the form data if validation passes.
 // handlesubmit is an keyword we can't use it as a function name because it is already defined in the react-hook-form library.
 // So we use login as the function name instead.

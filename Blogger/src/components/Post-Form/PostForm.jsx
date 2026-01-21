@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import appWriteService from "../../appwrite/config.js";
-import { AppwriteException } from "appwrite";
 
 function PostForm({ post }) {
   const { register, handleSubmit, watch, setValue, getValues, control } =
