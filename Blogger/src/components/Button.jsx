@@ -1,4 +1,3 @@
-import { text } from "express";
 import React from "react";
 
 function Button({

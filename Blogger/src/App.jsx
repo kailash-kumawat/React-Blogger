@@ -9,17 +9,37 @@ function App() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   authService
+  //     .getCurrentUser()
+  //     .then((userData) => {
+  //       if (userData) {
+  //         dispatch(login({ userData }));
+  //       } else {
+  //         dispatch(logout());
+  //       }
+  //     })
+  //     .finally(() => setLoading(false));
+  // }, []);
+
   useEffect(() => {
-    authService
-      .getCurrentUser()
-      .then((userData) => {
+    const fetchUser = async () => {
+      try {
+        const userData = await authService.getCurrentUser();
+
         if (userData) {
           dispatch(login({ userData }));
         } else {
           dispatch(logout());
         }
-      })
-      .finally(() => setLoading(false));
+      } catch (err) {
+        dispatch(logout());
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
   }, []);
 
   return !loading ? (

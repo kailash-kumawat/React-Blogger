@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import appwriteService from "../appwrite/config.js";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { Container } from "postcss";
-import { PostCard, PostForm } from "../components";
+import { useNavigate, useParams } from "react-router-dom";
+import { Container } from "../components/index.js";
+import { PostForm } from "../components";
 
 function EditPost() {
-  const [post, SetPost] = useState(null);
+  const [post, SetPost] = useState([]);
   const navigate = useNavigate();
   const slug = useParams();
 
