@@ -44,9 +44,9 @@ export class AuthService {
       return await this.account.get();
     } catch (error) {
       if (error.code === 401) return null; // not logged in yet
-      console.log("Appwrite :: getCurrentUser :: error", error.message);
-      return null;
+      console.log("Appwrite :: getCurrentUser :: error", error);
     }
+    return null;
   }
 
   async logout() {
