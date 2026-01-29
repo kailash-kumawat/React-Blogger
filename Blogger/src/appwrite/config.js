@@ -16,18 +16,18 @@ export class Service {
 
   async createPost({ title, slug, content, img, status, userId }) {
     try {
-      return await this.databases.createDocument(
-        conf.appwriteDbId,
-        conf.appwriteCollectionId,
-        slug,
-        {
+      return await this.databases.createDocument({
+        databaseId: conf.appwriteDbId,
+        collectionId: conf.appwriteCollectionId,
+        documentId: slug,
+        data: {
           title,
           content,
           img,
           status,
-          userId,
+          authorId: userId,
         },
-      );
+      });
     } catch (error) {
       console.log("Appwrite serive :: createPost :: error", error);
     }
@@ -93,11 +93,11 @@ export class Service {
 
   async uploadFile(file) {
     try {
-      return await this.bucket.createFile(
-        conf.appwriteBucketId,
-        ID.unique(),
+      return await this.bucket.createFile({
+        bucketId: conf.appwriteBucketId,
+        fileId: ID.unique(),
         file,
-      );
+      });
     } catch (error) {
       console.log("Appwrite serive :: uploadFile :: error", error);
       return false;

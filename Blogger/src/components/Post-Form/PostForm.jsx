@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Button, Input, RTE } from "../index.js";
+import { Button, Input, RTE, Select } from "../index.js";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -17,41 +17,37 @@ function PostForm({ post }) {
     });
 
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.user.userData);
+  const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
     if (post) {
-      const file = data.image[0]
-        ? appWriteService.uploadFile(data.image[0])
-        : null;
+      let fileId = post.img;
 
-      if (file) {
-        appWriteService.deleteFile(post.img);
+      if (data.image && data.image[0]) {
+        const file = await appWriteService.uploadFile(data.image[0]);
+        if (file) {
+          await appWriteService.deleteFile(post.img);
+          fileId = file.$id;
+        }
       }
 
-      const dbPost = appWriteService.updatePost(post.$id, {
+      const dbPost = await appWriteService.updatePost(post.$id, {
         ...data,
-        img: file ? file.$id : undefined,
+        img: fileId,
       });
 
-      if (dbPost) {
-        navigate(`/post/${post.$id}`);
-      }
+      if (dbPost) navigate(`/post/${dbPost.$id}`);
     } else {
-      const file = await appWriteService.uploadFile(data.img[0]);
+      const file = await appWriteService.uploadFile(data.image[0]);
 
       if (file) {
-        const fileId = file.$id;
-        data.img = fileId;
-
         const dbPost = await appWriteService.createPost({
           ...data,
+          img: file.$id,
           userId: userData.$id,
         });
 
-        if (dbPost) {
-          navigate(`/post/${post.$id}`);
-        }
+        if (dbPost) navigate(`/post/${dbPost.$id}`);
       }
     }
   };

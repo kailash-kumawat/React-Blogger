@@ -19,5 +19,3 @@ function PostCard({ $id, title, img }) {
 }
 
 export default PostCard;
-
-// login components
